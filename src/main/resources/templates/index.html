@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Apex Legends</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header th:replace="~{fragments/layout :: header}"></header>
+
+<main>
+    <section class="hero">
+        <h1>Apex Legends</h1>
+        <p>Browse every legend, their abilities, and Evo upgrades.</p>
+        <a th:href="@{/legends}">View All Legends</a>
+    </section>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+</body>
+</html>

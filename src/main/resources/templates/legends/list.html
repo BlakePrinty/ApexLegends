@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Legends</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header th:replace="~{fragments/layout :: header}"></header>
+
+<main>
+    <h1>Legends</h1>
+
+    <div class="class-filters">
+        <a th:href="@{/legends}"
+           th:class="${selectedClass == null} ? 'filter active' : 'filter'">All</a>
+        <a th:each="lc : ${legendClasses}"
+           th:href="@{/legends(legendClass=${lc})}"
+           th:text="${lc}"
+           th:class="${selectedClass == lc} ? 'filter active' : 'filter'"></a>
+    </div>
+
+    <div class="legend-grid">
+        <a th:each="legend : ${legends}"
+           th:href="@{/legends/{name}(name=${legend.name})}"
+           class="legend-card">
+            <img th:src="@{'/images/legends/' + ${legend.icon}}" th:alt="${legend.name}">
+            <h2 th:text="${legend.name}"></h2>
+            <span th:text="${legend.legendClass}"></span>
+        </a>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+</body>
+</html>

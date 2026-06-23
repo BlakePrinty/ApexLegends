@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${legend.name}"></title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header th:replace="~{fragments/layout :: header}"></header>
+
+<main>
+  <section class="legend-hero">
+    <img th:src="@{'/images/legends/' + ${legend.icon}}" th:alt="${legend.name}">
+    <div class="legend-info">
+      <h1 th:text="${legend.name}"></h1>
+      <span class="class-badge"
+            th:text="${legend.legendClass}"
+            th:style="'background-color: ' + ${legend.legendClass.colorHex}"></span>
+      <p th:if="${legend.description != null}" th:text="${legend.description.nickname}"></p>
+      <dl>
+        <dt>Real Name</dt>
+        <dd th:text="${legend.realName}"></dd>
+        <dt>Age</dt>
+        <dd th:text="${legend.age}"></dd>
+        <dt>Homeworld</dt>
+        <dd th:text="${legend.homeWorld}"></dd>
+      </dl>
+      <blockquote th:text="${legend.introQuote}"></blockquote>
+    </div>
+  </section>
+
+  <section class="legend-bio" th:if="${legend.description != null}">
+    <p th:each="paragraph : ${legend.description.paragraphs}" th:text="${paragraph}"></p>
+  </section>
+
+  <section class="abilities">
+
+    <div class="ability-block" th:with="currentAbility=${legend.passive}" th:if="${currentAbility != null}">
+      <h3>Passive</h3>
+      <h4 th:text="${currentAbility.name}"></h4>
+      <p th:text="${currentAbility.description}"></p>
+    </div>
+
+    <div class="ability-block" th:with="currentAbility=${legend.tactical}" th:if="${currentAbility != null}">
+      <h3>Tactical</h3>
+      <h4 th:text="${currentAbility.name}"></h4>
+      <p th:text="${currentAbility.description}"></p>
+      <span th:text="${currentAbility.cooldown}"></span>
+
+      <div class="evo-upgrades">
+        <div th:each="upgrade : ${legend.evoUpgrades}"
+             th:if="${upgrade.ability != null and upgrade.ability.id == currentAbility.id}"
+             class="evo-upgrade">
+          <span th:text="'Level ' + ${upgrade.level}"></span>
+          <h5 th:text="${upgrade.name}"></h5>
+          <p th:text="${upgrade.description}"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ability-block" th:with="currentAbility=${legend.ultimate}" th:if="${currentAbility != null}">
+      <h3>Ultimate</h3>
+      <h4 th:text="${currentAbility.name}"></h4>
+      <p th:text="${currentAbility.description}"></p>
+
+      <div class="evo-upgrades">
+        <div th:each="upgrade : ${legend.evoUpgrades}"
+             th:if="${upgrade.ability != null and upgrade.ability.id == currentAbility.id}"
+             class="evo-upgrade">
+          <span th:text="'Level ' + ${upgrade.level}"></span>
+          <h5 th:text="${upgrade.name}"></h5>
+          <p th:text="${upgrade.description}"></p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+</body>
+</html>
